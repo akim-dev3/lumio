@@ -242,8 +242,8 @@ textarea:focus, input:focus {
 }
 
 .seg__opt.is-active {
-  background: var(--accent);
-  color: var(--accent-text);
+  background: #6366f1;
+  color: #ffffff;
 }
 
 /* Buttons ------------------------------------------------------------- */
@@ -269,8 +269,8 @@ textarea:focus, input:focus {
 }
 
 .btn--primary {
-  background: var(--accent);
-  color: var(--accent-text);
+  background: #6366f1;
+  color: #ffffff;
 }
 
 .btn--ghost {
