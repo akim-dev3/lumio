@@ -66,8 +66,14 @@ async def _on_startup(bot: Bot) -> None:
 
 
 async def _on_shutdown(bot: Bot) -> None:
-    await bot.delete_webhook(drop_pending_updates=False)
-    await bot.session.close()
+      # Intentionally do NOT call delete_webhook here.
+      # On Render's free tier the platform sends SIGTERM whenever the service
+      # idles or redeploys. If we deleted the webhook here, Telegram would have
+      # nowhere to deliver the next update and the bot would appear to die.
+      # Leaving the webhook registered is safe: the next startup re-registers it
+      # (idempotent on Telegram's side) and Render wakes the service on the next
+      # inbound POST /webhook from Telegram.
+      await bot.session.close()
 
 
 async def _healthcheck(_: web.Request) -> web.Response:
