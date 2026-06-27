@@ -1,0 +1,32 @@
+# Secrets & local DB
+.env
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# IDE & local tooling
+.vscode/
+.idea/
+.claude/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artefacts
+build/
+dist/
+*.apkg
