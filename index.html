@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0f0f10" />
+  <title>LUMIO</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="./css/style.css?v=2" />
+</head>
+<body>
+  <!-- Persistent UI shell -->
+  <div id="app">
+    <header class="topbar">
+      <button id="backBtn" class="icon-btn hidden" aria-label="Back">‹</button>
+      <h1 id="screenTitle">LUMIO</h1>
+      <div id="planBadge" class="badge badge--free">free · 3/3</div>
+    </header>
+
+    <main id="screen" class="screen"></main>
+  </div>
+
+  <!-- Global overlays -->
+  <div id="loader" class="loader hidden" aria-hidden="true">
+    <div class="spinner"></div>
+    <p id="loaderText">Загрузка…</p>
+  </div>
+
+  <div id="toast" class="toast hidden" role="status"></div>
+
+  <!-- Screen templates -->
+  <template id="tpl-home">
+    <section class="home">
+      <p class="lead">Выбери инструмент 👇</p>
+      <div class="grid grid--2">
+        <button class="tool" data-route="cards">
+          <span class="tool__icon">🎴</span>
+          <span class="tool__name">Anki Cards</span>
+          <span class="tool__desc">Карточки из любого текста</span>
+        </button>
+        <button class="tool" data-route="posts">
+          <span class="tool__icon">✍️</span>
+          <span class="tool__name">TG Copywriter</span>
+          <span class="tool__desc">Посты для каналов</span>
+        </button>
+        <button class="tool" data-route="pdf">
+          <span class="tool__icon">📄</span>
+          <span class="tool__name">PDF Analyst</span>
+          <span class="tool__desc">Конспект и вопросы</span>
+        </button>
+        <button class="tool" data-route="resume">
+          <span class="tool__icon">💼</span>
+          <span class="tool__name">Resume Builder</span>
+          <span class="tool__desc">Резюме под вакансию</span>
+        </button>
+      </div>
+      <div class="plan-info">
+        <button id="upgradeBtn" class="btn btn--ghost">⭐ Тарифы</button>
+      </div>
+    </section>
+  </template>
+
+  <template id="tpl-cards">
+    <section class="form">
+      <label class="field">
+        <span class="field__label">Текст для карточек</span>
+        <textarea id="cardsText" rows="8" placeholder="Вставь сюда конспект, статью или главу учебника…"></textarea>
+      </label>
+      <div class="field">
+        <span class="field__label">Количество карточек</span>
+        <div class="seg" data-name="count">
+          <button class="seg__opt" data-value="10">10</button>
+          <button class="seg__opt is-active" data-value="20">20</button>
+          <button class="seg__opt" data-value="30">30</button>
+        </div>
+      </div>
+      <button id="cardsSubmit" class="btn btn--primary">🎴 Сгенерировать</button>
+      <p class="hint">Результат и .apkg-файл придут в чат с ботом.</p>
+    </section>
+  </template>
+
+  <template id="tpl-posts">
+    <section class="form">
+      <label class="field">
+        <span class="field__label">Тема постов</span>
+        <textarea id="postsTopic" rows="4" placeholder="О чём писать? Например: «запуск нового AI-инструмента для маркетологов»"></textarea>
+      </label>
+      <div class="field">
+        <span class="field__label">Количество</span>
+        <div class="seg" data-name="count">
+          <button class="seg__opt is-active" data-value="3">3</button>
+          <button class="seg__opt" data-value="5">5</button>
+        </div>
+      </div>
+      <div class="field">
+        <span class="field__label">Тон</span>
+        <div class="seg" data-name="tone">
+          <button class="seg__opt is-active" data-value="casual">casual</button>
+          <button class="seg__opt" data-value="professional">professional</button>
+          <button class="seg__opt" data-value="viral">viral</button>
+        </div>
+      </div>
+      <button id="postsSubmit" class="btn btn--primary">✍️ Написать посты</button>
+    </section>
+  </template>
+
+  <template id="tpl-pdf">
+    <section class="form">
+      <div class="card-info">
+        <h2>📄 PDF Analyst</h2>
+        <p>Пришли PDF-файл прямо в чат с ботом — он автоматически:</p>
+        <ol class="steps">
+          <li>извлечёт текст</li>
+          <li>составит краткое содержание</li>
+          <li>выделит 5 ключевых мыслей</li>
+          <li>предложит 5 проверочных вопросов</li>
+        </ol>
+        <p class="hint">Лимит: PDF до 10 МБ, до 50 страниц.</p>
+      </div>
+      <button id="pdfOpenChat" class="btn btn--primary">📎 Перейти в чат и прислать PDF</button>
+    </section>
+  </template>
+
+  <template id="tpl-resume">
+    <section class="form">
+      <label class="field">
+        <span class="field__label">Описание вакансии</span>
+        <textarea id="resumeVacancy" rows="6" placeholder="Вставь полный текст вакансии: должность, требования, обязанности…"></textarea>
+      </label>
+      <label class="field">
+        <span class="field__label">Твой опыт и навыки</span>
+        <textarea id="resumeExperience" rows="6" placeholder="Расскажи о себе: опыт работы, достижения, технологии, soft skills…"></textarea>
+      </label>
+      <button id="resumeSubmit" class="btn btn--primary">💼 Создать резюме</button>
+      <p class="hint">Получишь резюме, cover letter и список советов в чат.</p>
+    </section>
+  </template>
+
+  <script src="./js/ui.js?v=2"></script>
+  <script src="./js/api.js?v=2"></script>
+  <script src="./js/app.js?v=2"></script>
+</body>
+</html>
