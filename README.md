@@ -16,7 +16,7 @@ lumio/
 │   ├── handlers/            # /start, payment, webapp dispatcher
 │   ├── services/            # gemini, anki_gen, pdf_parser, limits
 │   └── db/                  # aiosqlite schema + queries
-├── webapp/
+├── docs/
 │   ├── index.html           # SPA shell + templates
 │   ├── css/style.css        # dark-first, TG theme vars
 │   └── js/{app,api,ui}.js   # router + bridge + components
@@ -45,7 +45,7 @@ copy .env.example .env                 # Windows
 python -m bot.main --polling
 ```
 
-For local Mini App testing, serve `webapp/` with any static server and expose it over HTTPS (e.g. with [`ngrok`](https://ngrok.com) or [`cloudflared`](https://github.com/cloudflare/cloudflared)) — Telegram requires HTTPS for `WebAppInfo.url`.
+For local Mini App testing, serve `docs/` with any static server and expose it over HTTPS (e.g. with [`ngrok`](https://ngrok.com) or [`cloudflared`](https://github.com/cloudflare/cloudflared)) — Telegram requires HTTPS for `WebAppInfo.url`.
 
 ```bash
 cd webapp
@@ -61,7 +61,7 @@ ngrok http 5173
 
 ### A. Static site — webapp
 
-1. New Static Site → connect repo → root `webapp/`.
+1. New Static Site → connect repo → root `docs/`.
 2. Build command: *(empty)* — Publish dir: `.`.
 3. Render gives you `https://lumio-webapp.onrender.com` → put it in `WEBAPP_URL`.
 
